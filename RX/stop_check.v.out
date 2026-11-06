@@ -1,0 +1,61 @@
+#! /c/Source/iverilog-install/bin/vvp
+:ivl_version "12.0 (devel)" "(s20150603-1110-g18392a46)";
+:ivl_delay_selection "TYPICAL";
+:vpi_time_precision + 0;
+:vpi_module "C:\iverilog\lib\ivl\system.vpi";
+:vpi_module "C:\iverilog\lib\ivl\vhdl_sys.vpi";
+:vpi_module "C:\iverilog\lib\ivl\vhdl_textio.vpi";
+:vpi_module "C:\iverilog\lib\ivl\v2005_math.vpi";
+:vpi_module "C:\iverilog\lib\ivl\va_math.vpi";
+S_0000017deaa22b40 .scope module, "stop_check" "stop_check" 2 3;
+ .timescale 0 0;
+    .port_info 0 /INPUT 1 "stop_check_en";
+    .port_info 1 /INPUT 1 "sampled_bit";
+    .port_info 2 /INPUT 1 "rst";
+    .port_info 3 /INPUT 1 "clk";
+    .port_info 4 /OUTPUT 1 "stop_err";
+o0000017deaa56fd8 .functor BUFZ 1, C4<z>; HiZ drive
+v0000017deaa22cd0_0 .net "clk", 0 0, o0000017deaa56fd8;  0 drivers
+o0000017deaa57008 .functor BUFZ 1, C4<z>; HiZ drive
+v0000017deaa22d70_0 .net "rst", 0 0, o0000017deaa57008;  0 drivers
+o0000017deaa57038 .functor BUFZ 1, C4<z>; HiZ drive
+v0000017deaa22e10_0 .net "sampled_bit", 0 0, o0000017deaa57038;  0 drivers
+o0000017deaa57068 .functor BUFZ 1, C4<z>; HiZ drive
+v0000017deaa9bc40_0 .net "stop_check_en", 0 0, o0000017deaa57068;  0 drivers
+v0000017deaa9bce0_0 .var "stop_err", 0 0;
+E_0000017deaa09bc0/0 .event negedge, v0000017deaa22d70_0;
+E_0000017deaa09bc0/1 .event posedge, v0000017deaa22cd0_0;
+E_0000017deaa09bc0 .event/or E_0000017deaa09bc0/0, E_0000017deaa09bc0/1;
+    .scope S_0000017deaa22b40;
+T_0 ;
+    %wait E_0000017deaa09bc0;
+    %load/vec4 v0000017deaa22d70_0;
+    %nor/r;
+    %flag_set/vec4 8;
+    %jmp/0xz  T_0.0, 8;
+    %pushi/vec4 0, 0, 1;
+    %assign/vec4 v0000017deaa9bce0_0, 0;
+    %jmp T_0.1;
+T_0.0 ;
+    %load/vec4 v0000017deaa9bc40_0;
+    %flag_set/vec4 8;
+    %jmp/0xz  T_0.2, 8;
+    %load/vec4 v0000017deaa22e10_0;
+    %cmpi/e 1, 0, 1;
+    %jmp/0xz  T_0.4, 4;
+    %pushi/vec4 0, 0, 1;
+    %assign/vec4 v0000017deaa9bce0_0, 0;
+    %jmp T_0.5;
+T_0.4 ;
+    %pushi/vec4 1, 0, 1;
+    %assign/vec4 v0000017deaa9bce0_0, 0;
+T_0.5 ;
+T_0.2 ;
+T_0.1 ;
+    %jmp T_0;
+    .thread T_0;
+# The file index is used to find the file name in the following table.
+:file_names 3;
+    "N/A";
+    "<interactive>";
+    "stop_check.v";
